@@ -157,7 +157,8 @@ bool parserFile(const string& file_path, DocInfo* doc_info)
 
 void Write(const DocInfo& doc_info, ofstream& ofstream)
 {
-    ofstream << doc_info.title << "\3" << doc_info.url << "\3" << doc_info.content << endl;
+    //使用不可见字符\1来划分内容，方便之后的读取
+    ofstream << doc_info.title << "\1" << doc_info.url << "\1" << doc_info.content << endl;
 }
 
 int main()

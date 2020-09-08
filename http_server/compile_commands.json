@@ -1,0 +1,14 @@
+[
+    {
+        "arguments": [
+            "g++",
+            "-c",
+            "-std=c++11",
+            "-o",
+            "http_server",
+            "http_server.cpp"
+        ],
+        "directory": "/home/lee/git/DocumentSearcher/http_server",
+        "file": "http_server.cpp"
+    }
+]

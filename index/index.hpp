@@ -1,5 +1,3 @@
-#pragma once
-
 #include"../common/util.hpp"
 
 namespace indexes
@@ -164,9 +162,13 @@ namespace indexes
 
             //根据doc_info来构建倒排索引
             Index::buildInvertIndex(*doc_info);
-
+            if (doc_info->doc_id % 100 == 0) 
+            {
+                std::cerr << doc_info->doc_id << std::endl;
+            }
             /*
                 抽空补充一个进度条
+                
             */
         } 
 

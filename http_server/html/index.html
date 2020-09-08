@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boost文档搜索</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            /* 设置高度, 把高度设为和父级元素一样高 */
+            height: 100%;
+            background-color: #f3f3f3;
+        }
+
+        body {
+            /* 添加背景图片*/
+            background-image: url("images/background.jpg");
+            /* 让背景图片不要平铺 */
+            background-repeat: no-repeat;
+            /* 设置背景图的尺寸覆盖整个元素 */
+            background-size: cover;
+            /* 设置背景图的位置 */
+            background-position: center center;
+        }
+
+        /*
+            设置 container 的样式
+            .container 是 类选择器. 和下面标签的class 属性对应,
+            CSS中创建类的时候, 需要用 . 开头, html 引用类的时候不要加 . 
+        */
+        .container {
+            /* 设置宽度*/
+            width: 860px;
+            /* 设置高度和父元素一样高 */
+            height: 100%;
+            /* 水平居中 */
+            margin: 0 auto;
+            /*设置背景颜色为半透明*/
+            background-color: rgba(255, 255, 255, 0.4);
+            /* 当内容太多的时候, 自动加上滚动条 */
+            overflow: auto;
+        }
+
+        /* 设置搜索框和搜索按钮的样式 */
+        .header {
+            /* 设置宽度和父元素一样宽*/
+            width: 100%;
+            height: 50px;
+        }
+
+        /*  设置图标    */
+        .header i {
+            background: url(images/search.png)no-repeat;
+            width: 31px;
+            height: 31px;
+            display: block;
+            position: absolute;
+            top: 10px;
+            left: 345px;
+            cursor: pointer;
+        }
+        
+        /* 复合选择器. 搭配了类选择器+标签选择器, 表示找 class 为 header 标签内部的 input 标签 */
+        .header input {
+            /* 设置宽度 */
+            width: 670px;
+            /* 设置高度 */
+            height: 54px;
+            /* 设置字体大小 */
+            font-size: 25px;
+            /* 设置左部边距 */
+            padding-left: 50px;
+            /* 增加浮动, 让 input 和按钮贴在一起 */
+            float: left;
+
+            color: #fff;
+            text-shadow: 
+            rgba(80, 80, 80, 0.08) 1px 1px, 
+            rgba(80, 80, 80, 0.07) 2px 2px, 
+            rgba(80, 80, 80, 0.09) 3px 3px, 
+            rgba(80, 80, 80, 0.04) 4px 4px, 
+            rgba(80, 80, 80, 0.06) 5px 5px; 
+            border-radius: 5px 0px 0px 5px;
+            -webkit-border-radius: 5px 0px 0px 5px;
+            -moz-border-radius: 5px 0px 0px 5px;
+            -o-border-radius: 5px 0px 0px 5px;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        /* 复合选择器, 选择 class 为 header 标签内部的 button 标签 */
+        .header button {
+            width: 125px;
+            height: 54px;
+            color: #fff;
+            font-size: 25px;
+            float: left;
+
+            /*背景及颜色设置*/
+            text-align: center;
+            text-shadow:
+            rgba(80, 80, 80, 0.08) 1px 1px, 
+            rgba(80, 80, 80, 0.07) 2px 2px, 
+            rgba(80, 80, 80, 0.09) 3px 3px, 
+            rgba(80, 80, 80, 0.04) 4px 4px, 
+            rgba(80, 80, 80, 0.06) 5px 5px;
+            border-radius: 0px 5px 5px 0px;
+            -webkit-border-radius:0px 5px 5px 0px;
+            -moz-border-radius:0px 5px 5px 0px;
+            -o-border-radius:0px 5px 5px 0px;
+            margin: 0px 0px 0px -4px;
+            background:#7ac209;
+            cursor:pointer;
+            border: none;
+            outline: none;
+            -webkit-appearance: none;
+            background: #7ac209;
+            background: -moz-linear-gradient(top, #7ac209 0%, #7ac209 37%, #7ac209 66%, #7ac209 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7ac209), color-stop(37%,#7ac209), color-stop(66%,#7ac209), color-stop(100%,#7ac209));
+            background: -webkit-linear-gradient(top, #7ac209 0%,#7ac209 37%,#7ac209 66%,#7ac209 100%);
+            background: -o-linear-gradient(top, #7ac209 0%,#7ac209 37%,#7ac209 66%,#7ac209 100%);
+            background: -ms-linear-gradient(top, #7ac209 0%,#7ac209 37%,#7ac209 66%,#7ac209 100%);
+            background: linear-gradient(to bottom, #8EDB15 0%,#8EDB15 37%,#8EDB15 66%,#8EDB15 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ac209', endColorstr='#7ac209',GradientType=0 );
+        }
+
+        /* 设置搜索结果的样式 */
+        .item {
+            width: 100%;
+            /* 设置上外边距 */
+            margin-top: 25px;
+            margin-left: 10px;
+
+        }
+
+        /* 设置标题的样式 */
+        .item a {
+            /* 把 a 设为块级元素. a 默认是行内元素, 无法设置宽高. */
+            display: block;
+            /* 设置尺寸 */
+            width: 100%;
+            height: 40px;
+            /* 设置字体大小 */
+            font-size: 22px;
+            /* 字体能够垂直居中, 让行高和高度相等即可 */
+            line-height: 40px;
+            /* 让字体粗一些 */
+            font-weight: 700;
+            /* 修改字体颜色 */
+            color: rgb(0, 0, 204);
+        }
+
+        /* 设置描述样式 */
+        .item p {
+            font-size: 18px;
+        }
+
+        /* 设置展示 url 的 样式 */
+        .item i {
+            font-size: 18px;
+            color: rgb(0, 170, 0);
+            /* 默认 i 标签是斜体字, 这是把字正回来 */
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 放置首行内容, 搜索框 + 搜索按钮 -->
+        <div class="header">
+            <!-- input 标签表示输入框, 这里作为搜索框 -->
+            <i> </i>
+            <input value="Boost Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Boost Search';}">
+            <!-- button 表示搜索按钮 -->
+            <!-- onclick 表示点击该按钮时, 就会调用 JS 中的 search 函数 -->
+            <button onclick="search()">Search</button>
+        </div>
+
+        <!-- 放置若干个搜索结果 -->
+        <div class="result">
+
+        </div>
+    </div>
+    <!-- 引入第三方库JQuery简化开发 -->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+        /*
+            工作流程：
+            1.当用户在输入框输入后点击搜索时，提取当前输入框的内容，构造成为http中的get请求发送给服务器。
+            2.服务器收到以后通过关键词进行查询，并将查询的结果响应回来
+            3.收到响应后利用响应结果中的Json数据来构造页面内容
+        */
+        // 当用户点击搜索按钮时, 就要获取到搜索框的内容, 构造 http 请求发送给服务器. 
+        // 在把响应结果构造到页面上显示. 
+        // 要让点击按钮操作关联上一个函数
+
+        // JS 在定义函数时, 不需要指定返回值类型(类型是可以运行时改变的), 也不需要指定参数类型. 
+        function search() {
+            //1.获取到搜索框中输入的查询词
+            //此处使用 JQuery 的语法. $ 是 JQuery 中的一个特殊对象. 参数里的内容是一个 CSS 选择器, 表示要选中某个元素. 
+            //接下来通过val()函数就得到了输入框的内容
+            let query = $(".header input").val();
+
+            //往控制台打印query, 可以在chrome的开发者工具中看到这个内容
+            console.log("query: " + query);
+
+            //2.构造HTTP请求发送给服务器
+            //$仍然是 JQuery 中的特殊对象. ajax 是一个重要的函数, 用于给服务器发送 HTTP 请求.
+            //ajax函数的参数是一个 { } json 对象
+            $.ajax({
+                //表示请求的 HTTP 方法为 get
+                type: "get",
+                //表示请求的 url 为 searcher?query=[查询词]
+                url: "searcher?query=" + query,
+
+                //3.成功收到服务器的响应后，根据响应来渲染页面
+                //success 对应到一个匿名回调函数(相当于 C++ 中的 lambda), 会在收到响应时, 并且状态码为 200 时自动调用该回调
+                //data参数就是响应结果的 body , status 就是状态码
+                success: function (data, status) {
+                    buildResult(data);
+                }
+            });
+        }
+
+        //根据服务器返回的JSON数据构造网页内容
+        function buildResult(data) {
+            //获取到result标签对应的对象
+            let result = $(".result");
+
+            //清除之前搜索的结果
+            result.empty();
+
+            //遍历返回的结果集data，利用Json结果来构造item
+            for (let item of data) {
+                //构造a标签做为标题
+                let title = $("<a>", {
+                    //将标题作为标签的文本内容
+                    text: item.title,
+                    //设置点击后跳转的url
+                    href: item.url,
+                    //点击标签时用新标签页打开
+                    target: "_blank",
+                });
+
+                //构造p标签作为描述信息
+                let desc = $("<p>", {
+                    text: item.desc,
+                });
+
+                //构造i标签作为url
+                let showUrl = $("<i>", {
+                    text: item.url,
+                });
+                //将上述标签加入item标签中
+                let itemHtml = $("<div>", {
+                    class: "item",
+                });
+                title.appendTo(itemHtml);
+                desc.appendTo(itemHtml);
+                showUrl.appendTo(itemHtml);
+
+                //将item标签加入result标签中
+                itemHtml.appendTo(result);
+            }
+        }
+    </script>
+</body>
+
+</html>
