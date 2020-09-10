@@ -16,6 +16,7 @@ BoostSearch是一个基于boost文档的站内搜索引擎，当用户在页面�
 http://118.178.139.161:8080/index.html
 
 # 介绍
+![image](https://github.com/HONGYU-LEE/BoostSearch/blob/master/doc/image/3.png)
 ![image](https://github.com/HONGYU-LEE/BoostSearch/blob/master/doc/image/1.png)
 ![image](https://github.com/HONGYU-LEE/BoostSearch/blob/master/doc/image/2.png)
-![image](https://github.com/HONGYU-LEE/BoostSearch/blob/master/doc/image/3.png)
+
