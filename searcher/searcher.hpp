@@ -92,9 +92,10 @@ namespace searcher
         /*
         ·   （确保关键词尽量在前，描述更加准确。并且保证描述信息简短，如果后面还有数据则用省略号表示）
             描述信息构建规则
-            1.正常情况下，选择关键词位置的前50个字节的位置作为起始位置，返回起始位置往后的160个字节。
+            返回内容 = 150字节 = 关键词往前50字节 + 关键词(包括关键词)往后100个字节
+            1.正常情况下，选择关键词位置的前50个字节的位置作为起始位置，返回起始位置往后的150个字节。
             2.当前面不足50个时，就从起点位置往后直接返回150个字节。当末尾不足时，直接返回到结束位置。如果后面还有数据用省略号表示。
-            3.如果正文中未找到关键词，则说明关键词在标题中，直接从起始位置开始返回160字节
+            3.如果正文中未找到关键词，则说明关键词在标题中，直接从起始位置开始返回150字节
         */
 
         size_t word_pos = content.find(word);
@@ -103,12 +104,12 @@ namespace searcher
         if(word_pos == string::npos)
         {
             //此时说明关键词位于标题，直接返回160个字节的数据，如果长度不够则直接返回正文
-            if(content.size() < 160)
+            if(content.size() < 150)
             {
                 return content;
             }
             
-            string desc = content.substr(begin_pos, 157);
+            string desc = content.substr(begin_pos, 147);
             desc += "...";
 
             return desc;
@@ -116,12 +117,12 @@ namespace searcher
 
         begin_pos = (word_pos > 50) ? word_pos - 50 : 0;
         //如果后续不够则直接返回到结尾
-        if(begin_pos + 160 >= content.size())
+        if(begin_pos + 150 >= content.size())
         {
             return content.substr(begin_pos);
         }
 
-        string desc = content.substr(begin_pos, 157);
+        string desc = content.substr(begin_pos, 147);
         desc += "...";
 
         return desc;
