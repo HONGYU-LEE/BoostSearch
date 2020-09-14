@@ -12,9 +12,10 @@ BoostSearch是一个基于boost文档的站内搜索引擎，当用户在页面�
 - 读取处理好的行文本文件进行分词、权重计算等操作，在内存中构造出正排索引和倒排索引。
 - 对查询词进行分词、触发，依据相关度对查询结果进行排序，并以Json格式进行包装后序列化为字符串返回。
 - 通过HTTP服务器搭载搜索页面， 为外部提供服务。
+## 项目难点分析
+[项目难点分析](https://github.com/HONGYU-LEE/BoostSearch/blob/master/doc/%E9%A1%B9%E7%9B%AE%E8%A7%A3%E6%9E%90%E4%B8%8E%E9%9A%BE%E7%82%B9%E5%88%86%E6%9E%90.md)
 ## 演示链接
 http://118.178.139.161:8080/index.html
-
 # 介绍
 ![image](https://github.com/HONGYU-LEE/BoostSearch/blob/master/doc/image/3.png)
 ![image](https://github.com/HONGYU-LEE/BoostSearch/blob/master/doc/image/1.png)
